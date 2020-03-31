@@ -2,7 +2,7 @@
 
 ---
 
-POCKPy is a Python 3 package for closed orbit analysis in HL-LHC. It is based on a linear treatment where the closed orbit perturbation of correctors and element errors is computed analytically and stored inside response matrices. The framework relies on input in the form of either MAD-X `.tfs` files from `TWISS` calls, or direct provision of a MAD-X script defining HL-LHC.
+POCKPy is a Python 3.6+ package for closed orbit analysis in HL-LHC. It is based on a linear treatment where the closed orbit perturbation of correctors and element errors is computed analytically and stored inside response matrices. The framework relies on input in the form of either MAD-X `.tfs` files from `TWISS` calls, or direct provision of a MAD-X script defining HL-LHC.
 
 POCKPy was developed at CERN, with support from the HL-LHC project, as part of a Master's thesis available [here](http://lup.lub.lu.se/student-papers/record/8998721). It is distributed under the [GPLv3](LICENSES/GPLv3.txt) license, with the exception of code relying on `cpymad` interaction which relies in part on the [MAD-X](LICENSES/MADX_LICENSE.txt) license
 

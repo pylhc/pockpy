@@ -16,7 +16,7 @@ POCKPY_PATH = os.path.dirname(POCKPY_PATH)
 WORKING_DIRECTORY_PATH = os.getcwd()
 
 # Check if the current working directory has a .pockpy_config.yml file.
-# If it does not, open the local config.py
+# If it does not, open the local config.yml
 try:
     file = open(os.path.join(WORKING_DIRECTORY_PATH, '.pockpy_config.yml'))
     CONFIG_PATH = WORKING_DIRECTORY_PATH

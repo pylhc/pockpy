@@ -21,7 +21,7 @@ The packages `sphinx` and `sphinx_rtd_theme` are necessary to compile the docume
 
 ## Installation
 
-To install POCKPy, clone the repository and run `pip install .` in the root directory. To uninstall, run `pip uninstall pockpy`.
+To install POCKPy, clone the repository and run `pip install .` in the root directory. To verify the integrity of the installation, executing `pytest` in the root directory will run unittests to this purpose. To uninstall this package, run `pip uninstall pockpy`.
 
 ## Quick start
 

@@ -1,0 +1,6 @@
+numpy
+pandas
+cpymad
+cvxpy
+tfs-pandas
+pyyaml

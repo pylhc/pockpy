@@ -1,0 +1,80 @@
+# Default configuration used in POCKPy if no local .pockpy_config.yml file is found
+
+# Path to knob definitions
+KNOB_DEFINITIONS_PATH_IS_RELATIVE : True
+KNOB_DEFINITIONS_PATH : 'data/knobs_v15.yml'
+
+# Default MAD-X file used if no other is given. Always assumed to be absolute.
+MADX_FILENAME_DEFAULT : '/afs/cern.ch/eng/lhc/optics/HLLHCV1.5/examples/job_round.madx'
+
+# Sequence names in MAD-X to use when constructing .tfs tables from MAD-X
+SEQUENCE_NAMES :
+  - 'LHCB1'
+  - 'LHCB2'
+
+# Path used for loading and saving Solver states.
+PICKLE_JAR_PATH_IS_RELATIVE: True 
+PICKLE_JAR_PATH : 'data/pickle_jar'
+
+# Set the default files for aperture offset. Always assumed to be absolute.
+APERTURE_OFFSET_DEFAULTS : 
+    LHCB1 : '/afs/cern.ch/eng/lhc/optics/HLLHCV1.5/aperture/offset.ip5.b1.tfs'
+    LHCB2 : '/afs/cern.ch/eng/lhc/optics/HLLHCV1.5/aperture/offset.ip5.b2.tfs'
+
+# The minimum columns to store in the Twiss (DataFrame) table which still allows
+# for full functionality.
+# Supplied to allow for Twiss tables to be shrunk in size.
+MINIMUM_TWISS_COLUMNS :
+  - 'KEYWORD'
+  - 'S'
+  - 'BETX'
+  - 'ALFX'
+  - 'MUX'
+  - 'BETY'
+  - 'ALFY'
+  - 'MUY'
+  - 'X'
+  - 'PX'
+  - 'Y'
+  - 'PY'
+  - 'DPX'
+  - 'DPY'
+  - 'L'
+  - 'K0L'
+  - 'K0SL'
+  - 'K1L'
+  - 'K1SL'
+  - 'HKICK'
+  - 'VKICK'
+  - 'TILT'
+
+# Used to treat elements in MAD-X which have been split up as a single one.
+# E.g., Q1 is sometimes treated as two separate elements, but for our purposes
+# any error affecting one part should affect both, hence we merge them in our
+# error response matrix.
+CONNECTED_ELEMENTS :
+  MQXFA.3L5:
+    - 'MQXFA.A3L5'
+    - 'MQXFA.B3L5'
+  MQXFA.1L5:
+    - 'MQXFA.A1L5'
+    - 'MQXFA.B1L5'
+  MQXFA.1R5:
+    - 'MQXFA.A1R5'
+    - 'MQXFA.B1R5'
+  MQXFA.3R5:
+    - 'MQXFA.A3R5'
+    - 'MQXFA.B3R5'
+  MQM.7R5.B1:
+    - 'MQM.A7R5.B1'
+    - 'MQM.B7R5.B1'
+  MQM.7R5.B2:
+    - 'MQM.A7R5.B2'
+    - 'MQM.B7R5.B2'
+  MQM.7L5.B1:
+    - 'MQM.A7L5.B1'
+    - 'MQM.B7L5.B1'
+  MQM.7L5.B2:
+    - 'MQM.A7L5.B2'
+    - 'MQM.B7L5.B2'
+

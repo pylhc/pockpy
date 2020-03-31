@@ -1,0 +1,374 @@
+# KNOB DEFINITIONS FOR HL-LHC OPTICS V1.5
+# ---------------------------------------
+# The structue for defining a knob can be
+# inferred from the context, but works as
+# follows:
+#
+# Any knob has three entries:
+# - orbit_spec: Three-keys-deep dict on
+# the form [beam][element][dimension] 
+# where each entry gives one equality
+# constraint to fulfill for the given
+# knob
+# - correctors: Regular expression defining
+# all the correctors allowed when implementing
+# the knob.
+# - quadrupole_offsets: Either null if no
+# quadrupoles get moved for the implementation
+# of the knob, otherwise a dict two-keys-deep
+# dict [quad_regex][DX or DY] where the first
+# key is a regular expression mapping to
+# quadrupoles to shift and the second key
+# denotes the dimension to shift it in.
+#
+
+CC_MOVE_B1:
+  orbit_spec:
+    LHCB1:
+      ACFGA.4AL5.B1:
+        X: 0.0005
+        Y: 0.0005
+      ACFGA.4AR5.B1:
+        X: 0.0005
+        Y: 0.0005
+      IP5:
+        PX: 0.0
+        PY: 0.0
+        X: 0.0
+        Y: 0.0
+      MQ.12L5.B1:
+        PX: 0.0
+        PY: 0.0
+        X: 0.0
+        Y: 0.0
+      MQ.12R5.B1:
+        PX: 0.0
+        PY: 0.0
+        X: 0.0
+        Y: 0.0
+    LHCB2:
+      ACFGA.4AL5.B2:
+        X: 0.0
+        Y: 0.0
+      ACFGA.4AR5.B2:
+        X: 0.0
+        Y: 0.0
+      ACFGA.4BL5.B2:
+        X: 0.0
+        Y: 0.0
+      ACFGA.4BR5.B2:
+        X: 0.0
+        Y: 0.0
+      IP5:
+        PX: 0.0
+        PY: 0.0
+        X: 0.0
+        Y: 0.0
+      MQ.12L5.B2:
+        PX: 0.0
+        PY: 0.0
+        X: 0.0
+        Y: 0.0
+      MQ.12R5.B2:
+        PX: 0.0
+        PY: 0.0
+        X: 0.0
+        Y: 0.0
+  correctors: '^MCB.*?\.[AB]?[1-6][LR]5'
+  quadrupole_offsets: null 
+CC_MOVE_B2:
+  orbit_spec:
+    LHCB1:
+      ACFGA.4AL5.B1:
+        X: 0.0
+        Y: 0.0
+      ACFGA.4AR5.B1:
+        X: 0.0
+        Y: 0.0
+      ACFGA.4BL5.B1:
+        X: 0.0
+        Y: 0.0
+      ACFGA.4BR5.B1:
+        X: 0.0
+        Y: 0.0
+      IP5:
+        PX: 0.0
+        PY: 0.0
+        X: 0.0
+        Y: 0.0
+      MQ.12L5.B1:
+        PX: 0.0
+        PY: 0.0
+        X: 0.0
+        Y: 0.0
+      MQ.12R5.B1:
+        PX: 0.0
+        PY: 0.0
+        X: 0.0
+        Y: 0.0
+    LHCB2:
+      ACFGA.4AL5.B2:
+        X: 0.0005
+        Y: 0.0005
+      ACFGA.4AR5.B2:
+        X: 0.0005
+        Y: 0.0005
+      IP5:
+        PX: 0.0
+        PY: 0.0
+        X: 0.0
+        Y: 0.0
+      MQ.12L5.B2:
+        PX: 0.0
+        PY: 0.0
+        X: 0.0
+        Y: 0.0
+      MQ.12R5.B2:
+        PX: 0.0
+        PY: 0.0
+        X: 0.0
+        Y: 0.0
+  correctors: '^MCB.*?\.[AB]?[1-6][LR]5'
+  quadrupole_offsets: null 
+IP_CROSSING:
+  orbit_spec:
+    LHCB1:
+      IP5:
+        PX: 0.0
+        PY: 0.000295
+        X: 0.0
+        Y: 0.0
+      MQ.12L5.B1:
+        PX: 0.0
+        PY: 0.0
+        X: 0.0
+        Y: 0.0
+      MQ.12R5.B1:
+        PX: 0.0
+        PY: 0.0
+        X: 0.0
+        Y: 0.0
+    LHCB2:
+      IP5:
+        PX: 0.0
+        PY: -0.000295
+        X: 0.0
+        Y: 0.0
+      MQ.12L5.B2:
+        PX: 0.0
+        PY: 0.0
+        X: 0.0
+        Y: 0.0
+      MQ.12R5.B2:
+        PX: 0.0
+        PY: 0.0
+        X: 0.0
+        Y: 0.0
+  correctors: '^MCB.*?\.[AB]?[2-4][LR]5'
+  quadrupole_offsets: null
+IP_SEPARATION:
+  orbit_spec:
+    LHCB1:
+      IP5:
+        PX: 0.0
+        PY: 0.0
+        X: 0.00075
+        Y: 0.0
+      MQ.12L5.B1:
+        PX: 0.0
+        PY: 0.0
+        X: 0.0
+        Y: 0.0
+      MQ.12R5.B1:
+        PX: 0.0
+        PY: 0.0
+        X: 0.0
+        Y: 0.0
+    LHCB2:
+      IP5:
+        PX: 0.0
+        PY: 0.0
+        X: -0.00075
+        Y: 0.0
+      MQ.12L5.B2:
+        PX: 0.0
+        PY: 0.0
+        X: 0.0
+        Y: 0.0
+      MQ.12R5.B2:
+        PX: 0.0
+        PY: 0.0
+        X: 0.0
+        Y: 0.0
+  correctors: '^MCB(RD.*?\.[AB]?4[LR]5|.*?\.[AB]?[1-3][LR]5)'
+  quadrupole_offsets: null 
+LUMISCAN_B1:
+  orbit_spec:
+    LHCB1:
+      IP5:
+        PX: 0.0
+        PY: 0.0
+        X: 0.0001
+        Y: 0.0001
+      MQ.12L5.B1:
+        PX: 0.0
+        PY: 0.0
+        X: 0.0
+        Y: 0.0
+      MQ.12R5.B1:
+        PX: 0.0
+        PY: 0.0
+        X: 0.0
+        Y: 0.0
+    LHCB2: {}
+  correctors: '^MCB.*?\.[AB]?[4-5][LR]5'
+  quadrupole_offsets: null
+LUMISCAN_B2:
+  orbit_spec:
+    LHCB1: {}
+    LHCB2:
+      IP5:
+        PX: 0.0
+        PY: 0.0
+        X: 0.0001
+        Y: 0.0001
+      MQ.12L5.B2:
+        PX: 0.0
+        PY: 0.0
+        X: 0.0
+        Y: 0.0
+      MQ.12R5.B2:
+        PX: 0.0
+        PY: 0.0
+        X: 0.0
+        Y: 0.0
+  correctors: '^MCB.*?\.[AB]?[4-5][LR]5'
+  quadrupole_offsets: null
+IP_OFFSET_REMOTE:
+  orbit_spec:
+    LHCB1:
+      IP5:
+        PX: 0.0
+        PY: 0.0
+        X: 0.002
+        Y: 0.002
+      MQ.12L5.B1:
+        PX: 0.0
+        PY: 0.0
+        X: 0.0
+        Y: 0.0
+      MQ.12R5.B1:
+        PX: 0.0
+        PY: 0.0
+        X: 0.0
+        Y: 0.0
+    LHCB2:
+      IP5:
+        PX: 0.0
+        PY: 0.0
+        X: 0.002
+        Y: 0.002
+      MQ.12L5.B2:
+        PX: 0.0
+        PY: 0.0
+        X: 0.0
+        Y: 0.0
+      MQ.12R5.B2:
+        PX: 0.0
+        PY: 0.0
+        X: 0.0
+        Y: 0.0
+  correctors: '^MCB[^R].*?\.[AB]?[4-8][LR]5'
+  quadrupole_offsets:
+    '^MQ.*?\.5[LR]5':
+      DX : 0.001
+      DY : 0.001
+    '^MQ.*?\.[AB]?[1-4][LR]5':
+      DX : 0.002
+      DY : 0.002
+IP_OFFSET_CORR:
+  orbit_spec:
+    LHCB1:
+      IP5:
+        PX: 0.0
+        PY: 0.0
+        X: 0.0005
+        Y: 0.0005
+      MQ.12L5.B1:
+        PX: 0.0
+        PY: 0.0
+        X: 0.0
+        Y: 0.0
+      MQ.12R5.B1:
+        PX: 0.0
+        PY: 0.0
+        X: 0.0
+        Y: 0.0
+    LHCB2:
+      IP5:
+        PX: 0.0
+        PY: 0.0
+        X: 0.0005
+        Y: 0.0005
+      MQ.12L5.B2:
+        PX: 0.0
+        PY: 0.0
+        X: 0.0
+        Y: 0.0
+      MQ.12R5.B2:
+        PX: 0.0
+        PY: 0.0
+        X: 0.0
+        Y: 0.0
+  correctors: '^MCB[^R].*?\.[AB]?[1-8][LR]5'
+  quadrupole_offsets: null
+
+# Currently not used
+#CC_OFFSET:
+#  orbit_spec:
+#    LHCB1:
+#      ACFCA.AL5.B1:
+#        X: 0.0005
+#        Y: 0.0005
+#      ACFCA.AR5.B1:
+#        X: 0.0005
+#        Y: 0.0005
+#      IP5:
+#        PX: 0.0
+#        PY: 0.0
+#        X: 0.0
+#        Y: 0.0
+#      MQ.12L5.B1:
+#        PX: 0.0
+#        PY: 0.0
+#        X: 0.0
+#        Y: 0.0
+#      MQ.12R5.B1:
+#        PX: 0.0
+#        PY: 0.0
+#        X: 0.0
+#        Y: 0.0
+#    LHCB2:
+#      ACFCA.AL5.B2:
+#        X: 0.0005
+#        Y: 0.0005
+#      ACFCA.AR5.B2:
+#        X: 0.0005
+#        Y: 0.0005
+#      IP5:
+#        PX: 0.0
+#        PY: 0.0
+#        X: 0.0
+#        Y: 0.0
+#      MQ.12L5.B2:
+#        PX: 0.0
+#        PY: 0.0
+#        X: 0.0
+#        Y: 0.0
+#      MQ.12R5.B2:
+#        PX: 0.0
+#        PY: 0.0
+#        X: 0.0
+#        Y: 0.0
+#  correctors: '^MCB.*?\.[AB]?[1-6][LR]5'
+#  quadrupole_offsets: null

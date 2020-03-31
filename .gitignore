@@ -1,0 +1,20 @@
+# Standard by-products go here
+d2_aperture
+__pycache__
+
+# If the user has opted for having a picke jar, ignore content
+data/pickle_jar/*
+!data/pickle_jar/README.md
+
+# The following I don't wanna track
+*.madx
+.vscode/
+.ycm*
+.ipynb_checkpoints
+
+# Don't track links added from MAD-X scripts
+lhc
+slhc
+
+# Trash from local pip install
+*.egg-info

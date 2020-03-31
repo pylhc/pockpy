@@ -17,6 +17,8 @@ The following packages are necessary to install POCKPy:
 * `tfs-pandas`
 * `pyyaml`
 
+The packages `sphinx` and `sphinx_rtd_theme` are necessary to compile the documentation, but not to install and run POCKPy.
+
 ## Installation
 
 To install POCKPy, clone the repository and run `pip install .` in the root directory. To uninstall, run `pip uninstall pockpy`.

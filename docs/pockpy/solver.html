@@ -1,0 +1,808 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>solver &mdash; pockpy  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="matrix_builder" href="matrix_builder.html" />
+    <link rel="prev" title="API Reference" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> pockpy
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">solver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matrix_builder.html">matrix_builder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core_io.html">core_io</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html">utils</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">pockpy</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">API Reference</a> &raquo;</li>
+        
+      <li>solver</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/pockpy/solver.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-pockpy.solver">
+<span id="solver"></span><h1>solver<a class="headerlink" href="#module-pockpy.solver" title="Permalink to this headline">¶</a></h1>
+<p>Main module for all analysis and user interaction with POCKPy.</p>
+<dl class="class">
+<dt id="pockpy.solver.Solver">
+<em class="property">class </em><code class="sig-prename descclassname">pockpy.solver.</code><code class="sig-name descname">Solver</code><span class="sig-paren">(</span><em class="sig-param">madx_filename=None</em>, <em class="sig-param">makethin_option_li=None</em>, <em class="sig-param">tfs_filename_dict=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pockpy.solver.Solver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class containing all the main routines for orbit correction analysis.</p>
+<p><strong>Initialize from TFS files</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tfs_filename_dict</span> <span class="o">=</span> <span class="p">{</span>
+<span class="gp">... </span>    <span class="s1">&#39;B1&#39;</span> <span class="p">:</span> <span class="n">tfs_filename_b1</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s1">&#39;B2&#39;</span> <span class="p">:</span> <span class="n">tfs_filename_b2</span>
+<span class="gp">... </span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">solver</span> <span class="o">=</span> <span class="n">Solver</span><span class="p">(</span><span class="n">tfs_filename_dict</span><span class="o">=</span><span class="n">tfs_filename_dict</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Initialize from MAD-X file (with sliced quadrupoles)</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">madx_filename</span> <span class="o">=</span> <span class="s1">&#39;/afs/directory/somewhere/test.madx&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">makethin_li</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span>    <span class="p">{</span>
+<span class="gp">... </span>        <span class="s1">&#39;pattern&#39;</span><span class="o">=</span><span class="s1">&#39;^MQ.*&#39;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s1">&#39;slice&#39;</span> <span class="p">:</span> <span class="mi">10</span>
+<span class="gp">... </span>    <span class="p">}</span>
+<span class="gp">... </span><span class="p">]</span> <span class="c1"># Slice all quadrupoles in 10 slices</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">solver</span> <span class="o">=</span> <span class="n">Solver</span><span class="p">(</span><span class="n">madx_filename</span><span class="o">=</span><span class="n">madx_filename</span><span class="p">,</span>
+<span class="gp">... </span>                <span class="n">makethin_option_li</span><span class="o">=</span><span class="n">makethin_li</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="pockpy.solver.Solver.add_errors">
+<code class="sig-name descname">add_errors</code><span class="sig-paren">(</span><em class="sig-param">errors</em>, <em class="sig-param">overwrite=False</em>, <em class="sig-param">element_range=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pockpy.solver.Solver.add_errors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds machine errors to the error table.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>errors</strong> (<em>dict</em>) – <p>A dict of the form:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">errors</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;DIPOLE&#39;</span> <span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;^MBXF&#39;</span> <span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;DX&#39;</span> <span class="p">:</span> <span class="mf">1e-3</span><span class="p">,</span>
+            <span class="s1">&#39;DPSI : 1e-6</span>
+        <span class="p">},</span>
+        <span class="s1">&#39;^MBRD&#39;</span> <span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;DKR0&#39;</span> <span class="p">:</span> <span class="mf">1e-3</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The first key is one of the possible error types, the second
+key is a regular expression matching elements fitting into said
+category of error types and the innermost dict maps from
+applicable errors to their numerical value.</p>
+<p><strong>NOTE</strong>: Elements that get matched multiple times in one call
+will be incremented each time if <code class="xref py py-data docutils literal notranslate"><span class="pre">overwrite</span></code> is False,
+if it <code class="xref py py-data docutils literal notranslate"><span class="pre">overwrite</span></code> is True then the final
+value will be arbitrary.</p>
+</p></li>
+<li><p><strong>overwrite</strong> (<em>bool</em>) – Decides whether the call overwrites
+entries inthe  error_table or if they are incremented.</p></li>
+<li><p><strong>element_range</strong> (<em>dict</em>) – Dictionary of form {beam : (start, end)} which
+specifies the inclusive range over which errors are to be added.
+If not specified, all elements will be considered.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pockpy.solver.Solver.attach_bpms">
+<code class="sig-name descname">attach_bpms</code><span class="sig-paren">(</span><em class="sig-param">bpm_mapping</em><span class="sig-paren">)</span><a class="headerlink" href="#pockpy.solver.Solver.attach_bpms" title="Permalink to this definition">¶</a></dt>
+<dd><p>Attaches BPMs to either quadrupoles or dipoles.</p>
+<p>This function makes it such that when the element assigned to a
+given BPM is transversally misaligned, so is the BPM.
+This misalignment of the BPM is not reflected in the error table.</p>
+<p>In an example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">bpm_mapping</span> <span class="o">=</span> <span class="p">{</span>
+<span class="gp">... </span>    <span class="s1">&#39;BPM1&#39;</span> <span class="p">:</span> <span class="s1">&#39;MQ1&#39;</span>
+<span class="gp">... </span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">solver</span><span class="o">.</span><span class="n">attach_bpms</span><span class="p">(</span><span class="n">bpm_mapping</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">errors</span> <span class="o">=</span> <span class="p">{</span>
+<span class="gp">... </span>    <span class="s1">&#39;QUADRUPOLE&#39;</span> <span class="p">:</span> <span class="p">{</span>
+<span class="gp">... </span>        <span class="s1">&#39;^MQ1$&#39;</span> <span class="p">:</span> <span class="p">{</span>
+<span class="gp">... </span>            <span class="s1">&#39;DX&#39;</span> <span class="p">:</span> <span class="mi">1</span>
+<span class="gp">... </span>        <span class="p">}</span>
+<span class="gp">... </span>    <span class="p">}</span>
+<span class="gp">... </span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">solver</span><span class="o">.</span><span class="n">add_errors</span><span class="p">(</span><span class="n">errors</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">solver</span><span class="o">.</span><span class="n">error_table</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="s1">&#39;QUADRUPOLE&#39;</span><span class="p">,</span> <span class="s1">&#39;MQ1&#39;</span><span class="p">,</span> <span class="s1">&#39;DX&#39;</span><span class="p">]</span>
+<span class="gp">... </span><span class="mf">1.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">solver</span><span class="o">.</span><span class="n">error_table</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="s1">&#39;BPM&#39;</span><span class="p">,</span> <span class="s1">&#39;BPM1&#39;</span><span class="p">,</span> <span class="s1">&#39;DX&#39;</span><span class="p">]</span>
+<span class="gp">... </span><span class="mf">0.0</span>
+</pre></div>
+</div>
+<p>Any addtional error added to an attached BPM is independent of said
+attached element.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>bpm_mapping</strong> (<em>dict</em>) – Dict mapping from a BPM (list of which can be
+retrieved by calling <a class="reference internal" href="#pockpy.solver.Solver.get_bpm_list" title="pockpy.solver.Solver.get_bpm_list"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_bpm_list()</span></code></a>) to an orbit
+perturbation source (list of which found by calling
+<a class="reference internal" href="#pockpy.solver.Solver.get_orbit_perturbation_element_list" title="pockpy.solver.Solver.get_orbit_perturbation_element_list"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_orbit_perturbation_element_list()</span></code></a>). BPMs
+not included in the mapping are assumed to be detached
+from all other elements.</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If any individual mapping is incorrect.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pockpy.solver.Solver.build_matrices">
+<code class="sig-name descname">build_matrices</code><span class="sig-paren">(</span><em class="sig-param">section=None</em>, <em class="sig-param">keep_all_by_default=True</em>, <em class="sig-param">keyword_li=None</em>, <em class="sig-param">pattern_li=None</em>, <em class="sig-param">concatenate_elements=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pockpy.solver.Solver.build_matrices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Builds the response matrices and error table.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This function must be run before any analysis is performed.</p>
+</div>
+<p><strong>Example</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">solver</span> <span class="o">=</span> <span class="n">Solver</span><span class="p">(</span><span class="n">madx_filename</span><span class="o">=</span><span class="s1">&#39;/home/nice_machine.madx&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">section</span> <span class="o">=</span> <span class="p">{</span>
+<span class="gp">... </span>    <span class="s1">&#39;LHCB1&#39;</span> <span class="p">:</span> <span class="p">(</span><span class="s1">&#39;MQ.25L5.B1&#39;</span><span class="p">,</span> <span class="s1">&#39;MQ.25R5.B1&#39;</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="s1">&#39;LHCB2&#39;</span> <span class="p">:</span> <span class="p">(</span><span class="s1">&#39;MQ.25L5.B2&#39;</span><span class="p">,</span> <span class="s1">&#39;MQ.25R5.B2&#39;</span><span class="p">)</span>
+<span class="gp">... </span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">solver</span><span class="o">.</span><span class="n">build_matrices</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">section</span><span class="o">=</span><span class="n">section</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">keep_all_by_default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="c1"># Use all elements..</span>
+<span class="gp">... </span>    <span class="n">keyword_li</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;DRIFT&#39;</span><span class="p">],</span> <span class="c1"># .. but exclude all drift spaces..</span>
+<span class="gp">... </span>    <span class="n">pattern_li</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;^IP[1-8&#39;</span><span class="p">]</span> <span class="c1"># .. and all IPs!</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">solver</span><span class="o">.</span><span class="n">build_matrices</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">section</span><span class="o">=</span><span class="n">section</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">keep_all_by_default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="c1"># Only include the essentials..</span>
+<span class="gp">... </span>    <span class="n">keyword_li</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;SEXTUPOLE&#39;</span><span class="p">],</span> <span class="c1"># .. but also add all sextupoles..</span>
+<span class="gp">... </span>    <span class="n">pattern_li</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;^IP[1-8&#39;</span><span class="p">]</span> <span class="c1"># .. and all IPs!</span>
+<span class="gp">... </span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>section</strong> (<em>dict</em>) – <p>Dict of the form:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">section</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">beam</span> <span class="p">:</span> <span class="p">(</span><span class="n">end</span><span class="p">,</span> <span class="n">start</span><span class="p">),</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>where beam is the beam name and (end, start) correspond to
+element names which define the inclusive end and start of
+the new section to be considered.</p>
+</p></li>
+<li><p><strong>keep_all_by_default</strong> (<em>bool</em>) – If True, defaults to keeping all
+elements for the active section, whereby <code class="xref py py-data docutils literal notranslate"><span class="pre">keyword_li</span></code>
+and <code class="xref py py-data docutils literal notranslate"><span class="pre">pattern_li</span></code> are used to exclude elements.
+Conversely, if False, only elements capable of inducing
+orbit perturbation are kept, where instead <code class="xref py py-data docutils literal notranslate"><span class="pre">keyword_li</span></code>
+and <code class="xref py py-data docutils literal notranslate"><span class="pre">pattern_li</span></code> are used to include additional
+elements beyond the minimal ones.</p></li>
+<li><p><strong>keyword_li</strong> (<em>list</em>) – A list of keywords to match the ‘KEYWORD’ column
+in the Twiss table. Allows for exclusion or inclusion depending
+on the value of <code class="xref py py-data docutils literal notranslate"><span class="pre">keep_all_by_default</span></code>.</p></li>
+<li><p><strong>pattern_li</strong> (<em>list</em>) – A list of patterns to match the element names
+in the Twiss table. Allows for exclusion or inclusion depending
+on the value of <code class="xref py py-data docutils literal notranslate"><span class="pre">keep_all_by_default</span></code>.</p></li>
+<li><p><strong>concatenate_elements</strong> (<em>bool</em>) – If True, merges error sources according
+to the <code class="xref py py-attr docutils literal notranslate"><span class="pre">CONNECTED_ELEMENTS</span></code> setting in the
+config file.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pockpy.solver.Solver.compute_correction_matrices">
+<code class="sig-name descname">compute_correction_matrices</code><span class="sig-paren">(</span><em class="sig-param">n_x</em>, <em class="sig-param">n_y=None</em>, <em class="sig-param">correct_at=None</em>, <em class="sig-param">bpm_scaling=None</em>, <em class="sig-param">corrector_scaling=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pockpy.solver.Solver.compute_correction_matrices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes two DataFrames which map from errors to corrector strengths
+and errors to residual closed orbit.</p>
+<p><strong>Example</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">bs</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">get_bpm_reading_series</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bs</span><span class="p">[:]</span> <span class="o">=</span> <span class="mf">1e-3</span> <span class="c1"># Weight all BPMs equally..</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bs</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="s1">&#39;B1&#39;</span><span class="p">,</span> <span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="s1">&#39;BPM3&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1e-1</span> <span class="c1"># except this important one for B1 in X</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cs</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">get_corrector_series</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cs</span><span class="p">[:]</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># Weight all correctors equally..</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cs</span><span class="p">[</span><span class="s1">&#39;C5&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span> <span class="c1"># except for C5 which we do not want to use</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">correct_at</span> <span class="o">=</span> <span class="p">{</span>
+<span class="gp">... </span>    <span class="s1">&#39;B1&#39;</span> <span class="p">:</span> <span class="p">{</span>
+<span class="gp">... </span>        <span class="s1">&#39;BPM7&#39;</span> <span class="p">:</span> <span class="s1">&#39;XY&#39;</span>
+<span class="gp">... </span>    <span class="p">}</span>
+<span class="gp">... </span><span class="p">}</span> <span class="c1"># Correct beam &#39;B1&#39; agressively in both planes at BPM &#39;BPM7&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">A</span><span class="p">,</span> <span class="n">B</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">compute_correction_matrices</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">n_x</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="c1"># Use 10 singular values in the horizontal plane..</span>
+<span class="gp">... </span>    <span class="n">n_y</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="c1"># .. and 20 in the vertical plane.</span>
+<span class="gp">... </span>    <span class="n">correct_at</span><span class="o">=</span><span class="n">correct_at</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">bpm_scaling</span><span class="o">=</span><span class="n">bs</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">corrector_scaling</span><span class="o">=</span><span class="n">cs</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">A</span> <span class="o">@</span> <span class="n">solver</span><span class="o">.</span><span class="n">error_table</span> <span class="c1"># Gives you corrector strength of correction</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">B</span> <span class="o">@</span> <span class="n">solver</span><span class="o">.</span><span class="n">error_table</span> <span class="c1"># Gives you residual orbit of correction</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>correct_at</strong> (<em>dict</em>) – <p>Dict of the form:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">correct_at</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">beam1</span> <span class="p">:</span> <span class="p">{</span>
+        <span class="n">bpm1</span> <span class="p">:</span> <span class="s1">&#39;X&#39;</span><span class="p">,</span>
+        <span class="n">bpm2</span> <span class="p">:</span> <span class="s1">&#39;XY&#39;</span><span class="p">,</span>
+        <span class="o">...</span>
+    <span class="p">},</span>
+    <span class="n">beam2</span><span class="p">:</span> <span class="p">{</span>
+        <span class="n">bpm3</span> <span class="p">:</span> <span class="s1">&#39;Y&#39;</span><span class="p">,</span>
+        <span class="o">...</span>
+    <span class="p">},</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>where each 3-tuple formed by taking two successive keys and
+their respective value forms a row to correct for.</p>
+</p></li>
+<li><p><strong>n_x</strong> (<em>int</em>) – Number of singular values in the horizontal
+plane for the correction.</p></li>
+<li><p><strong>n_y</strong> (<em>int</em>) – Number of singular values in the vertical
+plane for the correction. Defaults to
+<code class="xref py py-data docutils literal notranslate"><span class="pre">n_x</span></code> if not specified.</p></li>
+<li><p><strong>bpm_scaling</strong> (<em>pandas.Series</em>) – Scaling of the BPMs.
+A valid Series can be retrieved by calling
+<a class="reference internal" href="#pockpy.solver.Solver.get_bpm_reading_series" title="pockpy.solver.Solver.get_bpm_reading_series"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_bpm_reading_series()</span></code></a>. Weights have to be in the
+range [0,1) where a higher value emphasizes the entry for
+the correction.</p></li>
+<li><p><strong>corrector_scaling</strong> (<em>pandas.Series</em>) – Scaling of the correctors.
+A valid Series can be retrieved by calling
+<a class="reference internal" href="#pockpy.solver.Solver.get_corrector_series" title="pockpy.solver.Solver.get_corrector_series"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_corrector_series()</span></code></a>. Weights have to be in the
+range [0,1) where a higher value emphasizes the entry for
+the correction.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Two DataFrames mapping from errors to corrector strength and errors
+to residual closed orbit.</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – On incorrect input.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pockpy.solver.Solver.compute_perturbation">
+<code class="sig-name descname">compute_perturbation</code><span class="sig-paren">(</span><em class="sig-param">errors=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pockpy.solver.Solver.compute_perturbation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the perturbation caused by the errors in the error table.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>errors</strong> (<em>dict</em>) – Errors to <a class="reference internal" href="#pockpy.solver.Solver.add_errors" title="pockpy.solver.Solver.add_errors"><code class="xref py py-func docutils literal notranslate"><span class="pre">add_errors()</span></code></a>. This argument is
+optional. If provided the output perturbation will be that
+induced by the errors in <code class="xref py py-data docutils literal notranslate"><span class="pre">errors</span></code>.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A Series for the perturbation evaluated at all elements.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pockpy.solver.Solver.convex_correction">
+<code class="sig-name descname">convex_correction</code><span class="sig-paren">(</span><em class="sig-param">orbit_bound</em>, <em class="sig-param">cs_bound</em>, <em class="sig-param">w=0.0</em>, <em class="sig-param">correct_at=None</em>, <em class="sig-param">cvxpy_options=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pockpy.solver.Solver.convex_correction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Corrects the errors as a bounded optimzation problem.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>correct_at</strong> (<em>dict</em>) – <p>Dict of the form:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">correct_at</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">beam1</span> <span class="p">:</span> <span class="p">{</span>
+        <span class="n">bpm1</span> <span class="p">:</span> <span class="s1">&#39;X&#39;</span><span class="p">,</span>
+        <span class="n">bpm2</span> <span class="p">:</span> <span class="s1">&#39;XY&#39;</span><span class="p">,</span>
+        <span class="o">...</span>
+    <span class="p">},</span>
+    <span class="n">beam2</span><span class="p">:</span> <span class="p">{</span>
+        <span class="n">bpm3</span> <span class="p">:</span> <span class="s1">&#39;Y&#39;</span><span class="p">,</span>
+        <span class="o">...</span>
+    <span class="p">},</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>where each 3-tuple formed by taking two successive keys and
+their respective value forms a row to correct for.</p>
+</p></li>
+<li><p><strong>orbit_bound</strong> (<em>pandas.Series</em>) – Bound on the absolute orbit at BPMs.
+A valid Series can be retrieved by calling
+<a class="reference internal" href="#pockpy.solver.Solver.get_bpm_reading_series" title="pockpy.solver.Solver.get_bpm_reading_series"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_bpm_reading_series()</span></code></a>.</p></li>
+<li><p><strong>cs_bound</strong> (<em>pandas.Series</em>) – Bound on the absolute corrector strength.
+A valid Series can be retrieved by calling
+<a class="reference internal" href="#pockpy.solver.Solver.get_corrector_series" title="pockpy.solver.Solver.get_corrector_series"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_corrector_series()</span></code></a>.</p></li>
+<li><p><strong>w</strong> (<em>float</em>) – A positive scalar the regularizing term
+penalizing overall use of corrector strength. Used in the
+minimization objective as:
+|| resdual_orbit ||_2 + w * || corrector_strength ||</p></li>
+<li><p><strong>cvxpy_options</strong> (<em>dict</em>) – A dictionary of inputs to supply to
+<code class="xref py py-func docutils literal notranslate"><span class="pre">cvxpy.Problem.solve()</span></code> when it is called for the
+minimization. For possible options, see
+<a class="reference external" href="https://www.cvxpy.org/tutorial/advanced/index.html#solve-method-options">https://www.cvxpy.org/tutorial/advanced/index.html#solve-method-options</a></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Two Series, the corrector strength used and the
+residual post-correction.</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ValueError</strong> – On invalid input.</p></li>
+<li><p><strong>RuntimeError</strong> – On failing optimization.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pockpy.solver.Solver.detach_all_bpms">
+<code class="sig-name descname">detach_all_bpms</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pockpy.solver.Solver.detach_all_bpms" title="Permalink to this definition">¶</a></dt>
+<dd><p>Detaches all BPMs. See <a class="reference internal" href="#pockpy.solver.Solver.attach_bpms" title="pockpy.solver.Solver.attach_bpms"><code class="xref py py-func docutils literal notranslate"><span class="pre">attach_bpms()</span></code></a> for more info.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pockpy.solver.Solver.get_bpm_list">
+<code class="sig-name descname">get_bpm_list</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pockpy.solver.Solver.get_bpm_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of all BPMs in the Twiss table.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pockpy.solver.Solver.get_bpm_reading_series">
+<code class="sig-name descname">get_bpm_reading_series</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pockpy.solver.Solver.get_bpm_reading_series" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a Series where each entry is for a BPM in X or Y.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pockpy.solver.Solver.get_corrector_series">
+<code class="sig-name descname">get_corrector_series</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pockpy.solver.Solver.get_corrector_series" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a Series where each entry is a corrector.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pockpy.solver.Solver.get_error_element_list">
+<code class="sig-name descname">get_error_element_list</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pockpy.solver.Solver.get_error_element_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of all elements capable of having an error of
+some kind.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pockpy.solver.Solver.get_free_bpms">
+<code class="sig-name descname">get_free_bpms</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pockpy.solver.Solver.get_free_bpms" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of all BPMs that are not attached to any source of
+orbit perturbation.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pockpy.solver.Solver.get_orbit_perturbation_element_list">
+<code class="sig-name descname">get_orbit_perturbation_element_list</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pockpy.solver.Solver.get_orbit_perturbation_element_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of all elements able to induce closed orbit
+perturbation. Equivalent to all element with non-zero dipole or
+quadrupole field.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pockpy.solver.Solver.get_saved_states">
+<code class="sig-name descname">get_saved_states</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pockpy.solver.Solver.get_saved_states" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of all saved states in the
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">config.PICKLE_JAR_PATH</span></code> path.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pockpy.solver.Solver.give_orbit_wrt_element_center">
+<code class="sig-name descname">give_orbit_wrt_element_center</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pockpy.solver.Solver.give_orbit_wrt_element_center" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes all orbit values measured at quadrupoles or dipoles offset
+by their misalignment.</p>
+<p><strong>NOTE</strong>: This also applies to sliced optics, where offsetting a quadrupole
+also changes the reference of all sliced quadrupoles belonging to it.
+Elements that are considered connected as per
+<code class="xref py py-data docutils literal notranslate"><span class="pre">config.CONNECTED_ELEMENTS</span></code> will also be affected.</p>
+<p>To instead make all orbit values provided with respect to the ideal
+orbit <a class="reference internal" href="#pockpy.solver.Solver.give_orbit_wrt_reference_orbit" title="pockpy.solver.Solver.give_orbit_wrt_reference_orbit"><code class="xref py py-func docutils literal notranslate"><span class="pre">give_orbit_wrt_reference_orbit()</span></code></a>’.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pockpy.solver.Solver.give_orbit_wrt_reference_orbit">
+<code class="sig-name descname">give_orbit_wrt_reference_orbit</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pockpy.solver.Solver.give_orbit_wrt_reference_orbit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes all orbit values given with respect to the ideal orbit.</p>
+<p>To instead make all orbit values at dipoles and quadrupoles provided
+with respect to their center, call
+<a class="reference internal" href="#pockpy.solver.Solver.give_orbit_wrt_reference_orbit" title="pockpy.solver.Solver.give_orbit_wrt_reference_orbit"><code class="xref py py-func docutils literal notranslate"><span class="pre">give_orbit_wrt_reference_orbit()</span></code></a>’.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pockpy.solver.Solver.knob_implementation">
+<code class="sig-name descname">knob_implementation</code><span class="sig-paren">(</span><em class="sig-param">cs_bound</em>, <em class="sig-param">c_weight=None</em>, <em class="sig-param">force_parity=None</em>, <em class="sig-param">orbit_regularizer=None</em>, <em class="sig-param">knob_names=None</em>, <em class="sig-param">cvxpy_options=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pockpy.solver.Solver.knob_implementation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provides an optimal solution for the implementation of a set of
+knobs.</p>
+<p><strong>NOTE</strong>: Possible knobs to implement are read from the YAML file
+specified by <code class="xref py py-attr docutils literal notranslate"><span class="pre">config.KNOB_DEFINITIONS_PATH</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cs_bound</strong> (<em>pandas.Series</em>) – Bound on the absolute corrector strength.
+A valid Series can be retrieved by calling
+<a class="reference internal" href="#pockpy.solver.Solver.get_corrector_series" title="pockpy.solver.Solver.get_corrector_series"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_corrector_series()</span></code></a>.</p></li>
+<li><p><strong>c_weight</strong> (<em>pandas.Series</em>) – Weight for the overall corrector strength
+in the L2-minimization. A valid Series can be retrieved by
+calling <a class="reference internal" href="#pockpy.solver.Solver.get_corrector_series" title="pockpy.solver.Solver.get_corrector_series"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_corrector_series()</span></code></a>.</p></li>
+<li><p><strong>force_parity</strong> (<em>dict</em>) – <p>Argument to enforce parity among correctors.
+Argument must take the form of:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">force_parity</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">knob_name1</span> <span class="p">:</span> <span class="p">[</span>
+        <span class="p">[(</span><span class="n">p_1</span><span class="p">,</span> <span class="n">c_1</span><span class="p">),</span> <span class="p">(</span><span class="n">p_2</span><span class="p">,</span> <span class="n">c_2</span><span class="p">),</span> <span class="o">...</span><span class="p">],</span>
+        <span class="o">...</span>
+    <span class="p">],</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>where every p_i is plus-minus 1, and every c_i is a corrector.
+This argument works as follows: inside each sublist,
+the correctors inside the list will always be powered with the
+same magnitude and with sign given by p_i. For example,:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">force_parity</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;example&#39;</span> <span class="p">:</span> <span class="p">[</span>
+        <span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="n">c1</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">c2</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">c3</span><span class="p">)]</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Here the correctors c1, c2 and c3 are enforced to be powered
+with the same magnitude, where c1 and c3 are to be powered with
+the same sign, and c2 with the opposite sign to c1 and c3, when
+implementing the knob named ‘example’.</p>
+</p></li>
+<li><p><strong>orbit_regularizer</strong> (<em>dict</em>) – <p>Regularizing orbit term for the minimization
+function. Argument must be of the form:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">orbit_regularizer</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">knob_name</span> <span class="p">:</span> <span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">row_li</span><span class="p">,</span> <span class="n">p</span><span class="p">),</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>where each valid term entry in the dictionary adds another term
+to the minimization function as per:</p>
+<blockquote>
+<div><p>min_fun += w*||knob_name_orbit.loc[row_li]||_p</p>
+</div></blockquote>
+<p>w is a positive scalar for the added term, row_li a list of indices
+to include in the vector to be minimized and p is the norm to
+be used (np.inf for infinity norm).</p>
+</p></li>
+<li><p><strong>knob_names</strong> (<em>list</em>) – A list of knobs to be implemented. If not
+provided the method will default to implementing all defined
+knobs.</p></li>
+<li><p><strong>cvxpy_options</strong> (<em>dict</em>) – A dictionary of inputs to supply to
+<code class="xref py py-func docutils literal notranslate"><span class="pre">cvxpy.Problem.solve()</span></code> when it is called for the
+minimization. For possible options, see
+<a class="reference external" href="https://www.cvxpy.org/tutorial/advanced/index.html#solve-method-options">https://www.cvxpy.org/tutorial/advanced/index.html#solve-method-options</a></p></li>
+<li><p><strong>Returns</strong> – The corrector strength and implemented knob orbits in DataFrames.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pockpy.solver.Solver.linear_correction">
+<code class="sig-name descname">linear_correction</code><span class="sig-paren">(</span><em class="sig-param">n_x</em>, <em class="sig-param">n_y=None</em>, <em class="sig-param">correct_at=None</em>, <em class="sig-param">mode='normal'</em>, <em class="sig-param">bpm_scaling=None</em>, <em class="sig-param">corrector_scaling=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pockpy.solver.Solver.linear_correction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs a linear correction of the current errors.</p>
+<p>Performs a pseudoinverse-based correction of the current errors and
+returns the original perturbation, the corrector strength used for the
+correction and the final residual.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>correct_at</strong> (<em>dict</em>) – <p>Dict of the form:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">correct_at</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">beam1</span> <span class="p">:</span> <span class="p">{</span>
+        <span class="n">bpm1</span> <span class="p">:</span> <span class="s1">&#39;X&#39;</span><span class="p">,</span>
+        <span class="n">bpm2</span> <span class="p">:</span> <span class="s1">&#39;XY&#39;</span><span class="p">,</span>
+        <span class="o">...</span>
+    <span class="p">},</span>
+    <span class="n">beam2</span><span class="p">:</span> <span class="p">{</span>
+        <span class="n">bpm3</span> <span class="p">:</span> <span class="s1">&#39;Y&#39;</span><span class="p">,</span>
+        <span class="o">...</span>
+    <span class="p">},</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>where each 3-tuple formed by taking two successive keys and
+their respective value forms a row to correct for.</p>
+</p></li>
+<li><p><strong>mode</strong> (<em>str</em>) – <p>Specifies how the errors stored in
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">Solver.error_table</span></code> are to be interpreted. Mode can
+assume any of the following three values:</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">normal</span></code></dt><dd><p>Correction is performed on the errors stored in
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">error_table</span></code> where they assume to represent a specific
+machine.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">worst-case</span></code></dt><dd><p>Correction assumes each error is described by a
+zero-mean uniform distribution with boundaries given by
+stored errors (in absolute), and then returns the worst-case
+perturbation, correction strength and residual
+(in absolute value) for the given correction strategy, per
+entry in the output.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">rms</span></code></dt><dd><p>Correction assumes each error is described by a
+zero-mean uniform distribution with boundaries given by
+stored errors (in absolute), and then returns the RMS values
+for the perturbation, corrector strength and residual.</p>
+</dd>
+</dl>
+</p></li>
+<li><p><strong>n_x</strong> (<em>int</em>) – Number of singular values in the horizontal
+plane for the correction.</p></li>
+<li><p><strong>n_y</strong> (<em>int</em>) – Number of singular values in the vertical
+plane for the correction. Defaults to
+<code class="xref py py-data docutils literal notranslate"><span class="pre">n_x</span></code> if not specified.</p></li>
+<li><p><strong>bpm_scaling</strong> (<em>pandas.Series</em>) – Scaling of the BPMs.
+A valid Series can be retrieved by calling
+<a class="reference internal" href="#pockpy.solver.Solver.get_bpm_reading_series" title="pockpy.solver.Solver.get_bpm_reading_series"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_bpm_reading_series()</span></code></a>. Weights have to be in the
+range [0,1) where a higher value emphasizes the entry for
+the correction.</p></li>
+<li><p><strong>corrector_scaling</strong> (<em>pandas.Series</em>) – Scaling of the correctors.
+A valid Series can be retrieved by calling
+<a class="reference internal" href="#pockpy.solver.Solver.get_corrector_series" title="pockpy.solver.Solver.get_corrector_series"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_corrector_series()</span></code></a>. Weights have to be in the
+range [0,1) where a higher value emphasizes the entry for
+the correction.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Returns;</dt><dd><p>Two Series, corresponding to:</p>
+<ol class="arabic simple">
+<li><p>Corrector strength used for correction.</p></li>
+<li><p>Residual orbit post-correction.</p></li>
+</ol>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – On incorrect input.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pockpy.solver.Solver.load_state">
+<code class="sig-name descname">load_state</code><span class="sig-paren">(</span><em class="sig-param">pickle_name='temp.pickle'</em><span class="sig-paren">)</span><a class="headerlink" href="#pockpy.solver.Solver.load_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the solver state to a pickle in the
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">config.PICKLE_JAR_PATH</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>pickle_name</strong> (<em>str</em>) – Name of a .pickle file found in the pickle jar
+directory.</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>IOError</strong> – If <code class="xref py py-data docutils literal notranslate"><span class="pre">picke_name</span></code> does not
+    match any pickle in the pickle jar.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pockpy.solver.Solver.reset_errors">
+<code class="sig-name descname">reset_errors</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pockpy.solver.Solver.reset_errors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes all errors from the error table.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pockpy.solver.Solver.save_state">
+<code class="sig-name descname">save_state</code><span class="sig-paren">(</span><em class="sig-param">pickle_name='temp.pickle'</em>, <em class="sig-param">overwrite=False</em>, <em class="sig-param">shrink_twiss_table=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pockpy.solver.Solver.save_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves the solver state to a pickle in
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">config.PICKLE_JAR_PATH</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pickle_name</strong> (<em>str</em>) – Name of the pickle file the state is saved to.</p></li>
+<li><p><strong>overwrite</strong> (<em>bool</em>) – If True, overwrite any file with the same name in the
+pickle jar directory.</p></li>
+<li><p><strong>shrink_twiss_table</strong> – If True, only writes the Twiss table columns in
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">config.MINIMUM_TWISS_COLUMNS</span></code> to the pickle.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>IOError</strong> – If pickle with
+    with name <code class="xref py py-data docutils literal notranslate"><span class="pre">pickle_name</span></code> already exists and
+    <code class="xref py py-data docutils literal notranslate"><span class="pre">overwrite</span></code> is False.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="matrix_builder.html" class="btn btn-neutral float-right" title="matrix_builder" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="API Reference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright CERN
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

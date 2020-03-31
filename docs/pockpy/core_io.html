@@ -1,0 +1,615 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>core_io &mdash; pockpy  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="utils" href="utils.html" />
+    <link rel="prev" title="matrix_builder" href="matrix_builder.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> pockpy
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="solver.html">solver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matrix_builder.html">matrix_builder</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">core_io</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html">utils</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">pockpy</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">API Reference</a> &raquo;</li>
+        
+      <li>core_io</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/pockpy/core_io.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-pockpy.core_io">
+<span id="core-io"></span><h1>core_io<a class="headerlink" href="#module-pockpy.core_io" title="Permalink to this headline">¶</a></h1>
+<p>Module for MAD-X interaction and parsing of TFS tables to Twiss tables.</p>
+<dl class="class">
+<dt id="pockpy.core_io.MadxWrapper">
+<em class="property">class </em><code class="sig-prename descclassname">pockpy.core_io.</code><code class="sig-name descname">MadxWrapper</code><a class="headerlink" href="#pockpy.core_io.MadxWrapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper of the MAD-X wrapper <code class="xref py py-mod docutils literal notranslate"><span class="pre">cpymad</span></code>.</p>
+<p>This class is dedicated to providing useful combinations of MAD-X commands
+to be used as part of orbit correction analysis. For any other use of
+MAD-X, instead make use of <code class="xref py py-mod docutils literal notranslate"><span class="pre">cpymad</span></code> directly.</p>
+<p><strong>Example</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">madx</span> <span class="o">=</span> <span class="n">pockpy</span><span class="o">.</span><span class="n">MadxWrapper</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">madx</span><span class="o">.</span><span class="n">input</span><span class="p">(</span><span class="s1">&#39;some_machine.madx&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">madx</span><span class="o">.</span><span class="n">use_sequence</span><span class="p">(</span><span class="s1">&#39;B1&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">twiss1</span> <span class="o">=</span> <span class="n">madx</span><span class="o">.</span><span class="n">twiss</span><span class="p">(</span><span class="n">return_summ_table</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">shift_error</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;DX&#39;</span> <span class="p">:</span> <span class="mf">1e-6</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">madx</span><span class="o">.</span><span class="n">add_misalignment</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">pattern</span><span class="o">=</span><span class="s1">&#39;MQ.12R5.B1&#39;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">errors</span><span class="o">=</span><span class="n">shift_error</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">twiss2</span> <span class="o">=</span> <span class="n">madx</span><span class="o">.</span><span class="n">twiss</span><span class="p">(</span><span class="n">return_summ_table</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">perturbation</span> <span class="o">=</span> <span class="n">twiss2</span><span class="p">[</span><span class="s1">&#39;X&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">twiss1</span><span class="p">[</span><span class="s1">&#39;X&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="pockpy.core_io.MadxWrapper.add_field_error">
+<code class="sig-name descname">add_field_error</code><span class="sig-paren">(</span><em class="sig-param">pattern</em>, <em class="sig-param">errors</em>, <em class="sig-param">add_errors=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pockpy.core_io.MadxWrapper.add_field_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds field errors to elements in the active sequence.</p>
+<p>For more information about the impact of adding field errors and
+context, see the MAD-X documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pattern</strong> (<em>str</em>) – Regular expression defining elements in the active
+sequence which are to have field errors added to them.</p></li>
+<li><p><strong>errors</strong> (<em>dict</em>) – <p>Dictionary of the form:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">errors</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;DKN19&#39;</span> <span class="p">:</span> <span class="mf">3.0</span><span class="p">,</span>
+    <span class="s1">&#39;DKS1&#39;</span> <span class="p">:</span> <span class="mf">2.0</span><span class="p">,</span>
+    <span class="s1">&#39;DKNR1&#39;</span> <span class="p">:</span> <span class="mf">4.0</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>where the keys are using the MAD-X standard for <code class="docutils literal notranslate"><span class="pre">EFCOMP</span></code>
+in the sense that ‘DKN18’ corrsponds to ‘dkn(18)’, and the
+values are the corresponding magnitude of the errors.
+The <a class="reference internal" href="solver.html#module-pockpy.solver" title="pockpy.solver"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pockpy.solver</span></code></a> notation where ‘DK’ and ‘DKR’ are
+interpreted as ‘DKN’ and ‘DKNR’ respectively is supported.</p>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If <code class="xref py py-data docutils literal notranslate"><span class="pre">errors</span></code> does not match expected
+    format.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pockpy.core_io.MadxWrapper.add_misalignment">
+<code class="sig-name descname">add_misalignment</code><span class="sig-paren">(</span><em class="sig-param">pattern</em>, <em class="sig-param">errors</em>, <em class="sig-param">add_errors=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pockpy.core_io.MadxWrapper.add_misalignment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds misalignments to matched elements in the active sequence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pattern</strong> (<em>str</em>) – Regular expression to match elements in
+the active sequence which are to have added misalignments.</p></li>
+<li><p><strong>errors</strong> (<em>dict</em>) – Dictionary mapping from MAD-X errors to floats.</p></li>
+<li><p><strong>add_errors</strong> (<em>bool</em>) – True if errors introduced by the call are to
+increment already existing ones, otherwise they
+are overwritten.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pockpy.core_io.MadxWrapper.add_solver_element_errors">
+<code class="sig-name descname">add_solver_element_errors</code><span class="sig-paren">(</span><em class="sig-param">errors</em>, <em class="sig-param">add_errors=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pockpy.core_io.MadxWrapper.add_solver_element_errors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds errors using an error dictionary compatible with Solver.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>errors</strong> (<em>dict</em>) – <p>Dict of the form:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">errors</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">pattern</span> <span class="p">:</span> <span class="p">{</span>
+        <span class="n">error_type</span> <span class="p">:</span> <span class="n">val</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>where pattern is a regular expression matching elements
+which are to have their errors updated and error_type is a valid
+type of error as used in Solver, i.e. one of:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="s1">&#39;DX&#39;</span><span class="p">,</span> <span class="s1">&#39;DY&#39;</span><span class="p">,</span> <span class="s1">&#39;DPSI&#39;</span><span class="p">,</span> <span class="s1">&#39;DS&#39;</span><span class="p">,</span> <span class="s1">&#39;DK0&#39;</span><span class="p">,</span> <span class="s1">&#39;DKR0&#39;</span><span class="p">,</span> <span class="s1">&#39;DK1&#39;</span><span class="p">,</span> <span class="s1">&#39;DKR1&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</p></li>
+<li><p><strong>add_errors</strong> (<em>bool</em>) – True if all impacted errors are to be
+incremented, otherwise their previous errors are overwritten.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pockpy.core_io.MadxWrapper.available_aperture_scan">
+<code class="sig-name descname">available_aperture_scan</code><span class="sig-paren">(</span><em class="sig-param">aperture_offset</em>, <em class="sig-param">co_li</em>, <em class="sig-param">run_thrice=False</em>, <em class="sig-param">optics_type='round'</em>, <em class="sig-param">col_formatter=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pockpy.core_io.MadxWrapper.available_aperture_scan" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs multiple aperture computations for a list of closed orbit
+uncertainties, and pre-defined parameters.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Assumes an (HL-)LHC machine.</p>
+</div>
+<p>Runs an <code class="docutils literal notranslate"><span class="pre">APERTURE</span></code> call in MAD-X with some pre-defined parameters.
+For in-depth information, see the official MAD-X documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>aperture_offset</strong> (<em>str</em>) – Path to a valid element OFFSETELEM as
+defined in MAD-X.</p></li>
+<li><p><strong>co</strong> (<em>list</em>) – Iterable, sorted in ascending order,
+of closed orbit uncertainties.</p></li>
+<li><p><strong>run_thrice</strong> (<em>float</em>) – <p>If False runs a single <code class="docutils literal notranslate"><span class="pre">APERTURE</span></code> call to
+compute the aperture, otherwise runs the call for three
+different settings and returns the worst aperture among them
+for each point. The three scenarios are</p>
+<ol class="arabic simple">
+<li><p>DeltaP = dPmax with a bucket edge of 0.</p></li>
+<li><p>DeltaP = -dPmax with a bucket edge of 0</p></li>
+<li><p>DeltaP = 0 with a bucket edge of dPmax.</p></li>
+</ol>
+</p></li>
+<li><p><strong>optics_type</strong> (<em>str</em>) – Type of optics. Should be one of ‘round’,
+‘flat’ or ‘injection’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A DataFrame with the available aperture given per provided
+closed orbit uncertainty in <code class="xref py py-data docutils literal notranslate"><span class="pre">co_li</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pockpy.core_io.MadxWrapper.call">
+<code class="sig-name descname">call</code><span class="sig-paren">(</span><em class="sig-param">filename</em><span class="sig-paren">)</span><a class="headerlink" href="#pockpy.core_io.MadxWrapper.call" title="Permalink to this definition">¶</a></dt>
+<dd><p>Executes the provided .madx file in MAD-X.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>filename</strong> (<em>str</em>) – A path to a .madx file</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pockpy.core_io.MadxWrapper.compute_aperture_table">
+<code class="sig-name descname">compute_aperture_table</code><span class="sig-paren">(</span><em class="sig-param">aperture_offset</em>, <em class="sig-param">co=0</em>, <em class="sig-param">run_thrice=False</em>, <em class="sig-param">optics_type='round'</em><span class="sig-paren">)</span><a class="headerlink" href="#pockpy.core_io.MadxWrapper.compute_aperture_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs an aperture computation with pre-defined parameters.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Assumes an (HL-)LHC machine.</p>
+</div>
+<p>Runs an <code class="docutils literal notranslate"><span class="pre">APERTURE</span></code> call in MAD-X with some pre-defined parameters.
+For in-depth information, see the official MAD-X documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>aperture_offset</strong> (<em>str</em>) – Path to a valid element OFFSETELEM as
+defined in MAD-X.</p></li>
+<li><p><strong>co</strong> (<em>float</em>) – Closed orbit uncertainty.</p></li>
+<li><p><strong>run_thrice</strong> (<em>float</em>) – <p>If False runs a single <code class="docutils literal notranslate"><span class="pre">APERTURE</span></code> call to
+compute the aperture, otherwise runs the call for three
+different settings and returns the worst aperture among them
+for each point. The three scenarios are</p>
+<ol class="arabic simple">
+<li><p>DeltaP = dPmax with a bucket edge of 0.</p></li>
+<li><p>DeltaP = -dPmax with a bucket edge of 0</p></li>
+<li><p>DeltaP = 0 with a bucket edge of dPmax.</p></li>
+</ol>
+</p></li>
+<li><p><strong>optics_type</strong> (<em>str</em>) – Type of optics. Should be one of ‘round’,
+‘flat’ or ‘injection’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A DataFrame with the available aperture.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pockpy.core_io.MadxWrapper.get_corrector_strength">
+<code class="sig-name descname">get_corrector_strength</code><span class="sig-paren">(</span><em class="sig-param">index</em><span class="sig-paren">)</span><a class="headerlink" href="#pockpy.core_io.MadxWrapper.get_corrector_strength" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the corrector strength in the machine.</p>
+<p><strong>NOTE</strong>: Corrector strength is given in radians.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>index</strong> (<em>list</em>) – List or pandas Index containing corrector
+names of interest.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A pandas Series containing the corrector strength usage of each
+corrector specified by <code class="xref py py-data docutils literal notranslate"><span class="pre">index</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pockpy.core_io.MadxWrapper.input">
+<code class="sig-name descname">input</code><span class="sig-paren">(</span><em class="sig-param">cmd</em><span class="sig-paren">)</span><a class="headerlink" href="#pockpy.core_io.MadxWrapper.input" title="Permalink to this definition">¶</a></dt>
+<dd><p>Executes a given command in MAD-X.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cmd</strong> (<em>str</em>) – A MAD-X command on a single line.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pockpy.core_io.MadxWrapper.makethin">
+<code class="sig-name descname">makethin</code><span class="sig-paren">(</span><em class="sig-param">sequence</em>, <em class="sig-param">option_li</em><span class="sig-paren">)</span><a class="headerlink" href="#pockpy.core_io.MadxWrapper.makethin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Executes a MAKETHIN command in MAD-X.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sequence</strong> (<em>str</em>) – Name of sequence to be made thin.</p></li>
+<li><p><strong>option_li</strong> (<em>list</em>) – <p>List of dicts as per:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">option_li</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s1">&#39;class&#39;</span> <span class="p">:</span> <span class="s1">&#39;QUADRUPOLE&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;slice&#39;</span> <span class="p">:</span> <span class="mi">10</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="s1">&#39;pattern&#39;</span> <span class="p">:</span> <span class="s1">&#39;^MQXF.*&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;slice&#39;</span> <span class="p">:</span> <span class="mi">20</span>
+    <span class="p">},</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>Any given dict must contain a ‘slice’ entry, and at
+least one of ‘class’ and ‘pattern’.</p>
+<p>The selections are performed sequentially with the options
+of the first dictionary in the list applied first and
+terminated by a MAKETHIN command.</p>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>KeyError</strong> – If <code class="xref py py-data docutils literal notranslate"><span class="pre">option_li</span></code> does not match
+    expected format.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pockpy.core_io.MadxWrapper.quit">
+<code class="sig-name descname">quit</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pockpy.core_io.MadxWrapper.quit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Terminates the current MAD-X instance.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pockpy.core_io.MadxWrapper.remove_all_sextupole_fields">
+<code class="sig-name descname">remove_all_sextupole_fields</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pockpy.core_io.MadxWrapper.remove_all_sextupole_fields" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the strength of all sextupoles to zero.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pockpy.core_io.MadxWrapper.remove_errors">
+<code class="sig-name descname">remove_errors</code><span class="sig-paren">(</span><em class="sig-param">pattern='.*'</em><span class="sig-paren">)</span><a class="headerlink" href="#pockpy.core_io.MadxWrapper.remove_errors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes all misalignments and field errors from matched elements.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>pattern</strong> – Regular expression specifying all elements in the
+active sequence which are to have their misalignments and field
+errors removed. Defaults to maching all elements.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pockpy.core_io.MadxWrapper.set_corrector_strength">
+<code class="sig-name descname">set_corrector_strength</code><span class="sig-paren">(</span><em class="sig-param">corrector_dict</em>, <em class="sig-param">increment=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pockpy.core_io.MadxWrapper.set_corrector_strength" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds strength to specified correctors in the active sequence.</p>
+<p><strong>NOTE</strong>: Corrector strength is given in radians.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>corrector_dict</strong> (<em>dict</em>) – A dict-like (e.g. <code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.Series</span></code>)
+mapping from corrector name to corrector strength in radians.</p></li>
+<li><p><strong>increment</strong> (<em>bool</em>) – If True, increments the current corrector strength
+in the machine.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pockpy.core_io.MadxWrapper.twiss">
+<code class="sig-name descname">twiss</code><span class="sig-paren">(</span><em class="sig-param">centre=True</em>, <em class="sig-param">return_summ_table=True</em>, <em class="sig-param">return_minimal_columns=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pockpy.core_io.MadxWrapper.twiss" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs Twiss inside MAD-X for the active sequence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>centre</strong> (<em>bool</em>) – True if Twiss parameters are to be evaluated
+at the middle of elements, otherwise they are evalutated
+at their entrance.</p></li>
+<li><p><strong>return_summ_table</strong> (<em>bool</em>) – True if the SUMM table is to be
+returned as a second output.</p></li>
+<li><p><strong>return_minimal_columns</strong> (<em>bool</em>) – True if only the columns used
+for POCKPy (as defined in
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">config.MINIMUM_TWISS_COLUMNS</span></code>) are to be returned for
+the Twiss table.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The Twiss and SUMM table from the Twiss call if
+<code class="xref py py-data docutils literal notranslate"><span class="pre">return_summ_table</span></code> is True, otherwise just the Twiss
+table.</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>RuntimeError</strong> – If no Twiss table is produced.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pockpy.core_io.MadxWrapper.use_sequence">
+<code class="sig-name descname">use_sequence</code><span class="sig-paren">(</span><em class="sig-param">seq</em>, <em class="sig-param">start='#S'</em>, <em class="sig-param">end='#E'</em><span class="sig-paren">)</span><a class="headerlink" href="#pockpy.core_io.MadxWrapper.use_sequence" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the active sequence inside MAD-X.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>seq</strong> (<em>str</em>) – Sequence to activate.</p></li>
+<li><p><strong>start</strong> (<em>str</em>) – Element from which the active sequence starts.
+Defaults to the first element of the sequence.</p></li>
+<li><p><strong>end</strong> (<em>str</em>) – Element defining the end of the active sequence.
+Defaults to the last element of the sequence.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pockpy.core_io.MadxWrapper.verbose">
+<code class="sig-name descname">verbose</code><span class="sig-paren">(</span><em class="sig-param">switch=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pockpy.core_io.MadxWrapper.verbose" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes the output less or more verbose inside the MAD-X instance.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Does not always result in any notable difference.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>switch</strong> (<em>bool</em>) – True for more verbose, False for less.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="pockpy.core_io.load_tfs_table">
+<code class="sig-prename descclassname">pockpy.core_io.</code><code class="sig-name descname">load_tfs_table</code><span class="sig-paren">(</span><em class="sig-param">filename</em><span class="sig-paren">)</span><a class="headerlink" href="#pockpy.core_io.load_tfs_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes a .tfs file and returns the Twiss and SUMM tables.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>filename</strong> (<em>str</em>) – Path to .tfs file from a Twiss call.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A Twiss and SUMM table for the given machine and beam.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="pockpy.core_io.madx_to_tables">
+<code class="sig-prename descclassname">pockpy.core_io.</code><code class="sig-name descname">madx_to_tables</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">makethin_option_li=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pockpy.core_io.madx_to_tables" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes a .madx file for a machine and returns a Twiss table
+to be used for the for Solver.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>filename</strong> (<em>str</em>) – Path to a .madx file defining the machine.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A Twiss table DataFrame and a Summ table expressed as a dict,
+both containing the requisite data for the sequences defined in
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">config.SEQUENCE_NAMES</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="pockpy.core_io.tfs_to_tables">
+<code class="sig-prename descclassname">pockpy.core_io.</code><code class="sig-name descname">tfs_to_tables</code><span class="sig-paren">(</span><em class="sig-param">filename_dict</em><span class="sig-paren">)</span><a class="headerlink" href="#pockpy.core_io.tfs_to_tables" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes .tfs files and returns a Twiss table for Solver.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>filename_dict</strong> (<em>dict</em>) – A dict mapping from beam name to corresponding
+.tfs table.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A DataFrame containing the Twiss table for input to Solver.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="utils.html" class="btn btn-neutral float-right" title="utils" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="matrix_builder.html" class="btn btn-neutral float-left" title="matrix_builder" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright CERN
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

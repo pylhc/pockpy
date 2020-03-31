@@ -1,0 +1,304 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>utils &mdash; pockpy  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="core_io" href="core_io.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> pockpy
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="solver.html">solver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matrix_builder.html">matrix_builder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core_io.html">core_io</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">utils</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">pockpy</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">API Reference</a> &raquo;</li>
+        
+      <li>utils</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/pockpy/utils.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-pockpy.utils">
+<span id="utils"></span><h1>utils<a class="headerlink" href="#module-pockpy.utils" title="Permalink to this headline">¶</a></h1>
+<p>Module containing various auxiliary functions used in other modules.</p>
+<dl class="function">
+<dt id="pockpy.utils.compute_available_closed_orbit">
+<code class="sig-prename descclassname">pockpy.utils.</code><code class="sig-name descname">compute_available_closed_orbit</code><span class="sig-paren">(</span><em class="sig-param">aperture_scan_df</em>, <em class="sig-param">limit</em>, <em class="sig-param">col='N1'</em><span class="sig-paren">)</span><a class="headerlink" href="#pockpy.utils.compute_available_closed_orbit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes available closed orbit on input aperture scan table and limit.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>aperture_scan_df</strong> (<em>pd.DataFrame</em>) – DataFrame from a call to
+<code class="xref py py-func docutils literal notranslate"><span class="pre">core_io.aperture_scan()</span></code>.</p></li>
+<li><p><strong>limit</strong> (<em>pd.Series</em>) – Series sharing the index of <cite>py:data:`aperture_scan</cite>
+where each entry specifies the minimum acceptable aperture of the
+kind specified by <cite>py:data:`col</cite>.</p></li>
+<li><p><strong>col</strong> (<em>str</em>) – String specifying which of the aperture outputs is
+constrained. Should be one of ‘N1’, ‘N1X_M’ or ‘N1Y_M’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Series containing the maximal closed orbit uncertainty for which the
+aperture limit is satistfied per element.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="pockpy.utils.pinv">
+<code class="sig-prename descclassname">pockpy.utils.</code><code class="sig-name descname">pinv</code><span class="sig-paren">(</span><em class="sig-param">A</em>, <em class="sig-param">n</em><span class="sig-paren">)</span><a class="headerlink" href="#pockpy.utils.pinv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs a pseudoinverse on a <code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.2darray</span></code> or
+<code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> for a given number of singular values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>A</strong> – DataFrame or numpy.2darray to be pseudoinverted.</p></li>
+<li><p><strong>n</strong> (<em>int</em>) – The number of singular values to used for the pseudoinverse.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Pseudoinverse of <code class="xref py py-data docutils literal notranslate"><span class="pre">A</span></code> for the given number of singular values.
+If <code class="xref py py-data docutils literal notranslate"><span class="pre">A</span></code> is a DataFrame, the pseudoinverse will be a DataFrame
+with index and columns swapped around.</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If invalid <code class="xref py py-data docutils literal notranslate"><span class="pre">n</span></code> is provided.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="pockpy.utils.pinv_per_dim">
+<code class="sig-prename descclassname">pockpy.utils.</code><code class="sig-name descname">pinv_per_dim</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">n_x</em>, <em class="sig-param">n_y=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pockpy.utils.pinv_per_dim" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs the pseudoinverse on a response matrix independently
+in each dimension.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pd.DataFrame</em>) – DataFrame to be pseudoinverted.</p></li>
+<li><p><strong>n_x</strong> (<em>int</em>) – Integer representing the number of singular values to use
+for the pseudo-inverse in the horizontal plane.</p></li>
+<li><p><strong>n_y</strong> (<em>int</em>) – Integer representing the number of singular values to use
+for the pseudoinverse in the vertical plane.
+Set to <code class="xref py py-data docutils literal notranslate"><span class="pre">n_x</span></code> if not provided.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Pseudoinverse of <code class="xref py py-data docutils literal notranslate"><span class="pre">df</span></code> (applied per dimension) expressed as
+a DataFrame with index and columns swapped around.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="pockpy.utils.remove_duplicates">
+<code class="sig-prename descclassname">pockpy.utils.</code><code class="sig-name descname">remove_duplicates</code><span class="sig-paren">(</span><em class="sig-param">itr</em><span class="sig-paren">)</span><a class="headerlink" href="#pockpy.utils.remove_duplicates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes duplicate elements from an iterable while retaining order
+and returns result as a list.</p>
+<p>The order of the input is maintained in the sense that the first
+occurrence of any given element defines its order.</p>
+<p><strong>Example</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">li</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span> <span class="s1">&#39;a&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">remove_duplicates</span><span class="p">(</span><span class="n">li</span><span class="p">)</span>
+<span class="go">[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tup</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">remove_duplicates</span><span class="p">(</span><span class="n">tup</span><span class="p">)</span>
+<span class="go">[&#39;b&#39;, &#39;a&#39;]</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>itr</strong> – An iterator.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A list with all duplicate elements removed and with intact ordering.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="core_io.html" class="btn btn-neutral float-left" title="core_io" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright CERN
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

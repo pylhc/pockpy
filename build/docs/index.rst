@@ -1,5 +1,7 @@
-Welcome to pockpy's documentation!
+POCKPy Documentation
 ==================================
+
+This document provides an API reference to complement the example Jupyter Notebooks in the repository.
 
 .. toctree::
    :maxdepth: 2
@@ -7,11 +9,3 @@ Welcome to pockpy's documentation!
 
    pockpy/index
 
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`

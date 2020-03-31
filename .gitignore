@@ -18,3 +18,6 @@ slhc
 
 # Trash from local pip install
 *.egg-info
+
+# Don't save documentation in the default output folder
+build/docs/output/*

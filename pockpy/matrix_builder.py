@@ -47,7 +47,7 @@ class MatrixBuilder:
         """ Computes the magnetic rigidity of a beam.
 
         Args:
-          beam(str): Beam name.
+          beam(str): Name of the beam.
 
         Returns:
           The magnetic rigidity of the given beam.
@@ -424,7 +424,7 @@ class MatrixBuilder:
             element(str): Name of element being the source of the kick.
             kick(float): Value of the orbit kick.
             plane(str): Transverse plane of interest, either 'X' or 'Y'.
-            beam(str): Name of the beam, either 'LHCB1' or 'LHCB2'.
+            beam(str): Name of the beam.
             return_as_numpy(bool): True if returned as numpy arrays
                 rather than pandas Series.
         Returns:
@@ -472,7 +472,7 @@ class MatrixBuilder:
             error_type(str): Type of the error, e.g. 'DX', 'DPSY'.
             error(float): Magnitude of the error.
             plane(str): Transverse plane of interest, either 'X' or 'Y'.
-            beam(str): Beam name,
+            beam(str): Name of the beam.
         Returns:
             Value of the resulting orbit kick.
         """
@@ -537,11 +537,11 @@ class MatrixBuilder:
         """ Computes the error caused by a source of error perturbation.
 
         Args:
-            element: Name of the element inducing the perturbation.
+            element(str): Name of the element inducing the perturbation.
             error_type(str): Name of error type, e.g. 'DX', 'DPSI'.
             error_value(float): Magnitude of the given error.
             plane(str): Transverse plane of interest, either 'X' or 'Y'.
-            beam(str): Beam name, assumed to be either 'LHCB1' or 'LHCB2'.
+            beam(str): Name of the beam.
             return_as_numpy(bool): True if returned as numpy arrays
                 rather than pandas Series.
         Returns:

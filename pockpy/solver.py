@@ -208,13 +208,13 @@ class Solver:
         self.detach_all_bpms()
 
         # Apply the new one
-        self._change_offsets_v2(bpm_mapping, -1.0)
+        self._change_offsets(bpm_mapping, -1.0)
         self._offset_mapping = bpm_mapping
 
     def detach_all_bpms(self):
         """ Detaches all BPMs. See :py:func:`attach_bpms` for more info. """
         if self._offset_mapping is not None:
-            self._change_offsets_v2(self._offset_mapping, 1.0)
+            self._change_offsets(self._offset_mapping, 1.0)
             self._offset_mapping = None
 
     def get_free_bpms(self):

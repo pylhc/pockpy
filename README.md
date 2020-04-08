@@ -29,4 +29,4 @@ For example usage, see the Jupyter notebooks in the `example` folder.
 
 ## API Reference
 
-A reference with some minimal examples is available [here](https://jodander.github.io/pockpy/). In the current form of the repository, the documentation is updated by running `make html` in the `build/docs` directory and copying the output in `build/docs/output/html` to `docs`.
+A reference with some minimal examples is available [here](https://pylhc.github.io/pockpy/). In the current form of the repository, the documentation is updated by running `make html` in the `build/docs` directory and copying the output in `build/docs/output/html` to `docs`.

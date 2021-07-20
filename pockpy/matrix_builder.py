@@ -8,6 +8,7 @@ import pandas as pd
 
 import pockpy.utils as utils
 import pockpy.config as config
+from pockpy.core_io import MadxWrapper 
 
 SPEED_OF_LIGHT = 299792458
 
@@ -27,7 +28,7 @@ class MatrixBuilder:
 
     """
 
-    def __init__(self, twiss_table, summ_table):
+    def __init__(self, twiss_table, summ_table, madx_filename=None):
 
         # For some .tfs tables K0L is not present but, K0L=ANGLE
         if 'K0L' not in twiss_table.columns:
@@ -35,12 +36,12 @@ class MatrixBuilder:
 
         self.summ_table = summ_table
         self.twiss_table = twiss_table
+        self.madx_filename = madx_filename
 
         # Gets initialized after ``build_matrices`` is called.
         self.corrector_response_matrix = None
         self.error_response_matrix = None
         self.error_table = None
-
 
     # See eq. (1.11) in MAD-X User's Reference Manual 5.04.02
     def _compute_magnetic_rigidity(self, beam):
@@ -61,7 +62,7 @@ class MatrixBuilder:
         """ Returns index for response matrices. """
 
         idx = []
-        dims = ['PX', 'PY', 'X', 'Y']
+        dims = ['PX', 'PY', 'X', 'Y', 'DX', 'DY']
         for beam in config.SEQUENCE_NAMES:
             elmts = list(self.twiss_table.loc[beam].index)
             idx += list(itertools.product([beam], dims, elmts))
@@ -134,12 +135,15 @@ class MatrixBuilder:
         key = lambda x : self.twiss_table.loc[(slice(None), x), 'S'][0]
         return pd.Index(sorted(cols, key=key), name='CORRS')
 
-    def _compute_corrector_response_matrix(self):
+    def _compute_corrector_response_matrix(self, brute_force=False):
         """ Computes the corrector response matrix.
 
         This method is run interally as part of the setup_for_analysis call. It
         makes use of the Twiss table to build up the response matrix.
 
+        Args:
+           brute_force(bool): If True and `self.madx_filename` is not `None`,  
+           then it computes the response via MAD-X
         Returns:
             A pandas DataFrame containing the corrector response matrix.
         """
@@ -150,7 +154,8 @@ class MatrixBuilder:
 
         print('Computing corrector matrix..')
         for corr in response_df:
-            response_df[corr] = self._corrector_to_pert(corr, response_df.index)
+            response_df[corr] = self._corrector_to_pert(corr, response_df.index, 
+                brute_force=brute_force)
 
         # We want the corrector strength expressed in [Tm] not [rad]
         for beam in self.summ_table.keys():
@@ -158,7 +163,7 @@ class MatrixBuilder:
             response_df.loc[(beam, slice(None), slice(None)), :] /= scale_to_tm
         return response_df
 
-    def _compute_error_response_matrix(self, concatenate_elements=True):
+    def _compute_error_response_matrix(self, concatenate_elements=True, brute_force=False):
         """ Computes the error response matrix.
 
         This method is run interally as part of the setup_for_analysis call. It
@@ -168,6 +173,8 @@ class MatrixBuilder:
             concatenate_elements(bool): If True, merges error sources according
                 to the :py:attr:`CONNECTED_ELEMENTS` setting in the
                 config file.
+            brute_force(bool): If True and `self.madx_filename` is not `None`,  
+                then it computes the response via MAD-X
         Returns:
             A pandas DataFrame containing the error response matrix.
         """
@@ -180,7 +187,8 @@ class MatrixBuilder:
         print('Computing error matrix..')
         for col in list(response_df.columns):
             response_df[col] = self._error_column_to_pert(col,
-                                                          response_df.index)
+                                                          response_df.index, 
+                                                          brute_force=brute_force)
 
         # Deal with connected error sources
         if concatenate_elements:
@@ -216,8 +224,7 @@ class MatrixBuilder:
                 except KeyError:
                     # Only happens if BPM not part of given beam..
                     continue
-
-
+        
         return response_df
 
     def build_matrices(self,
@@ -225,7 +232,8 @@ class MatrixBuilder:
                        keep_all_by_default=True,
                        keyword_li=None,
                        pattern_li=None,
-                       concatenate_elements=True):
+                       concatenate_elements=True,
+                       brute_force=False):
         """ Initializes all structures for subsequent analysis.
 
         Args:
@@ -255,6 +263,9 @@ class MatrixBuilder:
             concatenate_elements(bool): If True, merges error sources according
                 to the :py:attr:`CONNECTED_ELEMENTS` setting in the
                 config file.
+            brute_force(bool): If True, it computes the response matrices
+                by exciting a corrector/error on each element and run a Twiss
+                to get the actual response with respect to an un-excited machine 
         """
         self.twiss_table = self.slice_twiss_table(
             section=section,
@@ -262,9 +273,10 @@ class MatrixBuilder:
             keyword_li=keyword_li,
             pattern_li=pattern_li
         )
-        self.corrector_response_matrix = self._compute_corrector_response_matrix()
+        self.corrector_response_matrix = self._compute_corrector_response_matrix(
+            brute_force=brute_force)
         self.error_response_matrix = self._compute_error_response_matrix(
-            concatenate_elements=concatenate_elements)
+            concatenate_elements=concatenate_elements, brute_force=brute_force)
         self.error_table = pd.Series(0.0,
                                      index=self.error_response_matrix.columns)
 
@@ -348,12 +360,13 @@ class MatrixBuilder:
 
         return tt[to_keep]
 
-    def _error_column_to_pert(self, col, index):
+    def _error_column_to_pert(self, col, index, brute_force=False):
         """ Computes the closed orbit perturbation from a unit error.
 
         Args:
             col(tup): Tuple corresponding to a column in the error response matrix.
             index(pandas.Index): Index to be used for the output.
+            brute_force(bool): If to try compute response via MAD-X.
         Return:
             Series containing the perturbation.
         """
@@ -372,27 +385,30 @@ class MatrixBuilder:
                     i = 1
                     e_slice = e+f'..{i}'
                     n = pert.loc[beam, plane].shape[0]
-                    x, xp = np.zeros(n), np.zeros(n)
+                    x, xp, dx = np.zeros(n), np.zeros(n), np.zeros(n) 
                     while e_slice in self.twiss_table.loc[beam].index:
-                        x_incr, xp_incr = self._error_to_perturbation(
+                        x_incr, xp_incr, dx_incr = self._error_to_perturbation(
                             e_slice, err_type, 1.0, plane, beam)
                         x += x_incr
                         xp += xp_incr
+                        dx += dx_incr 
                         i += 1
                         e_slice = e+f'..{i}'
                 else:
-                    x, xp = self._error_to_perturbation(e, err_type, 1.0,
+                    x, xp, dx = self._error_to_perturbation(e, err_type, 1.0,
                                                         plane, beam)
                 pert.loc[beam, plane, :] = x
                 pert.loc[beam, 'P' + plane, :] = xp
+                pert.loc[beam, 'D' + plane, :] = dx
         return pert
 
-    def _corrector_to_pert(self, corr, index):
+    def _corrector_to_pert(self, corr, index, brute_force=False):
         """ Computes the closed orbit perturbation from a 1 rad kick.
 
         Args:
           corr(str): Orbit corrector name.
           index(pandas.Index): Index to be used for the output.
+          brute_force(bool): If to try compute response via MAD-X.
         Return:
           Series containing the perturbation.
         """
@@ -410,14 +426,15 @@ class MatrixBuilder:
             # The BV_FLAG indicates the orientation of the beam,
             # In HL-LHC, BV_FLAG = 1 for Beam 1, -1 for Beam 2
             kick = 1.0 * self.summ_table[beam]['BV_FLAG']
-            x, xp = self._kick_to_perturbation(corr, kick, plane, beam)
+            x, xp, dx = self._kick_to_perturbation(corr, kick, plane, beam, brute_force=brute_force)
 
             pert.loc[beam, plane, :] = x
             pert.loc[beam, 'P' + plane, :] = xp
+            pert.loc[beam, 'D' + plane, :] = dx
         return pert
 
     def _kick_to_perturbation(self, element, kick, plane, beam,
-                              return_as_numpy=True):
+                              return_as_numpy=True, brute_force=False):
         """ Computes the perturbation of closed orbit given a kick.
 
         Args:
@@ -427,6 +444,7 @@ class MatrixBuilder:
             beam(str): Name of the beam.
             return_as_numpy(bool): True if returned as numpy arrays
                 rather than pandas Series.
+            brute_force(bool): If to try compute response via MAD-X. 
         Returns:
             Induced perturbation in position and angle for the given plane.
         """
@@ -435,34 +453,60 @@ class MatrixBuilder:
         tt = self.twiss_table.loc[beam]
         st = self.summ_table[beam]
 
-        # Define the quantities to be used
-        beta = tt['BET'+plane]
-        alfa = tt['ALF'+plane]
-        mu = tt['MU'+plane]
-        if plane == 'X':
-            Q = st['Q1']
+        if brute_force:
+            # use madx
+            x0 = tt[plane]
+            px0 = tt['P'+plane]
+            dx0 = tt['D'+plane]
+
+            # compute new table with madx
+            if self.madx_filename is None:
+                raise ValueError('No madx_filename provided at instantiation!')
+            madx = MadxWrapper()
+            madx.input(self.madx_filename)                
+            madx.use_sequence(beam)
+            print('TODO! Need to find a way to add generic kick at any given element position in MAD-X')
+            # >>> shift_error = {'DX' : 1e-6}
+            # >>> madx.add_misalignment(
+            # ...     pattern='MQ.12R5.B1',
+            # ...     errors=shift_error
+            # ... )
+            twiss1 = madx.twiss(return_summ_table=False)
+            x  = twiss1[plane]-x0
+            px = twiss1['P'+plane]-px0
+            dx0 = twiss1['D'+plane]-dx0
+
         else:
-            Q = st['Q2']
+            # Define the quantities to be used
+            beta = tt['BET'+plane]
+            alfa = tt['ALF'+plane]
+            mu = tt['MU'+plane]
+            if plane == 'X':
+                Q = st['Q1']
+            else:
+                Q = st['Q2']
 
-        bet0 = beta[element]
-        mu0 = mu[element]
+            bet0 = beta[element]
+            mu0 = mu[element]
 
-        # Make sure to scale mu
-        mu  = mu * 2 * np.pi
-        mu0 = mu0 * 2 * np.pi
+            # Make sure to scale mu
+            mu  = mu * 2 * np.pi
+            mu0 = mu0 * 2 * np.pi
 
-        # Nice vectorization of the computation
-        mu_arr = mu - mu0
-        mu_arr += (mu_arr < 0) * Q * np.pi * 2
-        x = (kick * np.sqrt(bet0 * beta) * np.cos(
-            np.pi * Q - mu_arr)) / (2 * np.sin(np.pi * Q))
-        px = kick * np.sqrt(bet0) * np.sin(np.pi*Q - mu_arr) / (
-            2*np.sin(np.pi*Q)*np.sqrt(beta)) - alfa*x/beta
+            # Nice vectorization of the computation
+            mu_arr = mu - mu0
+            mu_arr += (mu_arr < 0) * Q * np.pi * 2
+            x = (kick * np.sqrt(bet0 * beta) * np.cos(
+                np.pi * Q - mu_arr)) / (2 * np.sin(np.pi * Q))
+            px = kick * np.sqrt(bet0) * np.sin(np.pi*Q - mu_arr) / (
+                2*np.sin(np.pi*Q)*np.sqrt(beta)) - alfa*x/beta
+            print('TODO: find a way to compute dispersion change induced by kick')
+            dx = np.NAN * kick * x # TODO: find a way to compute it analytically
 
         if return_as_numpy:
-            return x.to_numpy(), px.to_numpy()
+            return x.to_numpy(), px.to_numpy(), dx.to_numpy()
         else:
-            return x, px
+            return x, px, dx
 
     def _error_to_kick(self, elmt, error_type, error, plane, beam):
         """ Computes angular kick caused by a machine error.
@@ -533,7 +577,7 @@ class MatrixBuilder:
         return kick
 
     def _error_to_perturbation(self, element, error_type, error_value,
-                               plane, beam, return_as_numpy=True):
+                               plane, beam, return_as_numpy=True, brute_force=False):
         """ Computes the error caused by a source of error perturbation.
 
         Args:
@@ -544,6 +588,7 @@ class MatrixBuilder:
             beam(str): Name of the beam.
             return_as_numpy(bool): True if returned as numpy arrays
                 rather than pandas Series.
+            brute_force(bool): If to try compute response via MAD-X. 
         Returns:
             Induced perturbation in position and angle for the given
             :py:data:`plane`.
@@ -551,4 +596,4 @@ class MatrixBuilder:
         kick = self._error_to_kick(
             element, error_type, error_value, plane, beam)
         return self._kick_to_perturbation(
-            element, kick, plane, beam, return_as_numpy=return_as_numpy)
+            element, kick, plane, beam, return_as_numpy=return_as_numpy, brute_force=brute_force)

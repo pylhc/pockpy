@@ -37,6 +37,8 @@ MINIMUM_TWISS_COLUMNS :
   - 'PX'
   - 'Y'
   - 'PY'
+  - 'DX'
+  - 'DY'
   - 'DPX'
   - 'DPY'
   - 'L'

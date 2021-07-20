@@ -72,6 +72,9 @@ class Solver:
         self.error_response_matrix = None
         self.error_table = None
 
+        # Store original mad-x file (if provided) to allow for brute force computation of matrices
+        self.source_madx_filename = madx_filename
+
     def _get_all_unique_element_names(self):
         """
         Returns all unique element names across all beams.
@@ -231,7 +234,8 @@ class Solver:
                        keep_all_by_default=True,
                        keyword_li=None,
                        pattern_li=None,
-                       concatenate_elements=True):
+                       concatenate_elements=True,
+                       brute_force=False):
         """ Builds the response matrices and error table.
 
         .. note:: This function must be run before any analysis is performed.
@@ -283,15 +287,19 @@ class Solver:
             concatenate_elements(bool): If True, merges error sources according
                 to the :py:attr:`CONNECTED_ELEMENTS` setting in the
                 config file.
+            brute_force(book): If True, it tries to use the provided `madx_filename` 
+                at initialisation to compute response matrices based 
         """
 
-        matrix_builder = MatrixBuilder(self.parent_twiss_table, self.summ_table)
+        matrix_builder = MatrixBuilder(self.parent_twiss_table, self.summ_table, 
+                                        madx_filename=self.madx_filename)
         matrix_builder.build_matrices(
             section=section,
             keep_all_by_default=keep_all_by_default,
             keyword_li=keyword_li,
             pattern_li=pattern_li,
             concatenate_elements=concatenate_elements,
+            brute_force=brute_force,
         )
         self.twiss_table = matrix_builder.twiss_table
         self.error_table = matrix_builder.error_table
